@@ -2,6 +2,8 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import path from "path";
+import authRouter from "./routes/auth.routes";
+import { errorHandler } from "./middlewares/errorHandler.middleware";
 
 const app = express();
 
@@ -20,7 +22,15 @@ app.use(cookieParser());
 // routes import
 
 
+
+
 // routes declaration
+app.use("/api/v1/auth", authRouter);
+
+
+// Error Handler
+app.use(errorHandler)
+
 
 
 export { app };

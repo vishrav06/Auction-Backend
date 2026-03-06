@@ -22,7 +22,8 @@ exports.up = (pgm) => {
       is_suspended  BOOLEAN      NOT NULL DEFAULT FALSE,
       created_at    TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
       updated_at    TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
-      CONSTRAINT role_check CHECK (role IN ('user', 'admin'))
+      CONSTRAINT role_check CHECK (role IN ('user', 'admin')),
+      CONSTRAINT email_lowercase_check CHECK (email = LOWER(email))
     )
   `);
 
@@ -32,7 +33,6 @@ exports.up = (pgm) => {
     FOR EACH ROW EXECUTE FUNCTION update_updated_at()
   `);
 
-  pgm.sql(`CREATE INDEX idx_users_email ON users(email)`);
 };
 
 exports.down = (pgm) => {
